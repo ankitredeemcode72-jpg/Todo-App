@@ -4,7 +4,9 @@ function addTask() {
     document.getElementById("taskInput").value;
 
     if(task===""){
-        alert("Please enter a task");
+
+        alert("Please enter task");
+
         return;
     }
 
@@ -12,9 +14,32 @@ function addTask() {
     document.createElement("li");
 
     li.className =
-    "list-group-item";
+    "list-group-item d-flex justify-content-between";
 
-    li.innerText = task;
+    let span =
+    document.createElement("span");
+
+    span.innerText =
+    task;
+
+    let btn =
+    document.createElement("button");
+
+    btn.innerText =
+    "Delete";
+
+    btn.className =
+    "btn btn-danger btn-sm";
+
+    btn.onclick = function(){
+
+        li.remove();
+
+    };
+
+    li.appendChild(span);
+
+    li.appendChild(btn);
 
     document
     .getElementById("taskList")
@@ -22,5 +47,5 @@ function addTask() {
 
     document
     .getElementById("taskInput")
-    .value = "";
+    .value="";
 }
