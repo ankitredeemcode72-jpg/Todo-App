@@ -1,13 +1,14 @@
-function addTask() {
+function addTask(){
 
     let task =
     document.getElementById("taskInput").value;
 
-    if(task===""){
+    if(task==""){
 
         alert("Please enter task");
 
         return;
+
     }
 
     let li =
@@ -22,20 +23,24 @@ function addTask() {
     span.innerText =
     task;
 
+    span.onclick=function(){
+
+        span.style.textDecoration="line-through";
+
+    }
+
     let btn =
     document.createElement("button");
 
-    btn.innerText =
-    "Delete";
+    btn.innerText="Delete";
 
-    btn.className =
-    "btn btn-danger btn-sm";
+    btn.className="btn btn-danger btn-sm";
 
-    btn.onclick = function(){
+    btn.onclick=function(){
 
         li.remove();
 
-    };
+    }
 
     li.appendChild(span);
 
