@@ -1,56 +1,68 @@
-function addTask(){
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    let task =
-    document.getElementById("taskInput").value;
+displayTasks();
 
-    if(task==""){
+function addTask() {
 
+    let task = document.getElementById("taskInput").value;
+
+    if (task == "") {
         alert("Please enter task");
-
         return;
-
     }
 
-    let li =
-    document.createElement("li");
+    tasks.push(task);
 
-    li.className =
-    "list-group-item d-flex justify-content-between";
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 
-    let span =
-    document.createElement("span");
+    document.getElementById("taskInput").value = "";
 
-    span.innerText =
-    task;
+    displayTasks();
+}
 
-    span.onclick=function(){
+function displayTasks() {
 
-        span.style.textDecoration="line-through";
+    let list = document.getElementById("taskList");
 
-    }
+    list.innerHTML = "";
 
-    let btn =
-    document.createElement("button");
+    tasks.forEach(function(task, index) {
 
-    btn.innerText="Delete";
+        let li = document.createElement("li");
 
-    btn.className="btn btn-danger btn-sm";
+        li.className =
+        "list-group-item d-flex justify-content-between";
 
-    btn.onclick=function(){
+        let span = document.createElement("span");
 
-        li.remove();
+        span.innerText = task;
 
-    }
+        span.onclick = function() {
+            span.style.textDecoration = "line-through";
+        };
 
-    li.appendChild(span);
+        let btn = document.createElement("button");
 
-    li.appendChild(btn);
+        btn.innerText = "Delete";
 
-    document
-    .getElementById("taskList")
-    .appendChild(li);
+        btn.className = "btn btn-danger btn-sm";
 
-    document
-    .getElementById("taskInput")
-    .value="";
+        btn.onclick = function() {
+
+            tasks.splice(index, 1);
+
+            localStorage.setItem(
+                "tasks",
+                JSON.stringify(tasks)
+            );
+
+            displayTasks();
+        };
+
+        li.appendChild(span);
+        li.appendChild(btn);
+
+        list.appendChild(li);
+
+    });
 }
