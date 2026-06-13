@@ -25,6 +25,11 @@ function displayTasks() {
     let list = document.getElementById("taskList");
 
     list.innerHTML = "";
+    document
+.getElementById("counter")
+.innerText=
+
+"Total Tasks : "+tasks.length;
 
     tasks.forEach(function(task, index) {
 
