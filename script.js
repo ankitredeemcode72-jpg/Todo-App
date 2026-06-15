@@ -71,3 +71,20 @@ function displayTasks() {
 
     });
 }
+function clearTasks(){
+
+    let answer=
+
+    confirm("Delete all tasks?");
+
+    if(answer){
+
+        tasks=[];
+
+        localStorage.removeItem("tasks");
+
+        displayTasks();
+
+    }
+
+}
