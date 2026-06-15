@@ -5,15 +5,11 @@ displayTasks();
 function addTask() {
 
     let input = document.getElementById("taskInput");
-
     let task = input.value.trim();
 
-    if (task == "") {
-
+    if (task === "") {
         alert("Please enter task");
-
         return;
-
     }
 
     tasks.push({
@@ -26,7 +22,6 @@ function addTask() {
     input.value = "";
 
     displayTasks();
-
 }
 
 function displayTasks() {
@@ -37,6 +32,22 @@ function displayTasks() {
 
     document.getElementById("counter").innerText =
         "Total Tasks : " + tasks.length;
+
+    let completed=
+
+tasks.filter(function(task){
+
+    return task.completed;
+
+}).length;
+
+document
+
+.getElementById("completedCounter")
+
+.innerText=
+
+"Completed Tasks : "+completed;
 
     tasks.forEach(function(task, index) {
 
@@ -50,18 +61,15 @@ function displayTasks() {
         span.innerText = task.text;
 
         if (task.completed) {
-
             span.style.textDecoration = "line-through";
             span.style.color = "gray";
-
         }
 
         span.style.cursor = "pointer";
 
         span.onclick = function() {
 
-            tasks[index].completed =
-                !tasks[index].completed;
+            tasks[index].completed = !tasks[index].completed;
 
             localStorage.setItem(
                 "tasks",
@@ -69,7 +77,6 @@ function displayTasks() {
             );
 
             displayTasks();
-
         };
 
         let buttonDiv = document.createElement("div");
@@ -88,7 +95,7 @@ function displayTasks() {
                 task.text
             );
 
-            if (updated != null && updated.trim() != "") {
+            if (updated != null && updated.trim() !== "") {
 
                 tasks[index].text = updated.trim();
 
@@ -98,9 +105,7 @@ function displayTasks() {
                 );
 
                 displayTasks();
-
             }
-
         };
 
         let deleteBtn = document.createElement("button");
@@ -120,21 +125,16 @@ function displayTasks() {
             );
 
             displayTasks();
-
         };
 
         buttonDiv.appendChild(editBtn);
-
         buttonDiv.appendChild(deleteBtn);
 
         li.appendChild(span);
-
         li.appendChild(buttonDiv);
 
         list.appendChild(li);
-
     });
-
 }
 
 function clearTasks() {
@@ -148,7 +148,5 @@ function clearTasks() {
         localStorage.removeItem("tasks");
 
         displayTasks();
-
     }
-
 }
