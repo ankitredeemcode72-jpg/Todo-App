@@ -13,9 +13,20 @@ function addTask() {
     }
 
     tasks.push({
-        text: task,
-        completed: false
-    });
+
+text:task,
+
+completed:false,
+
+priority:
+
+document
+
+.getElementById("priority")
+
+.value
+
+});
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
@@ -58,7 +69,19 @@ document
 
         let span = document.createElement("span");
 
-        span.innerText = task.text;
+        span.innerText=
+
+task.text+
+
+" ("
+
++
+
+task.priority
+
++
+
+")";
 
         if (task.completed) {
             span.style.textDecoration = "line-through";
