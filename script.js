@@ -12,38 +12,26 @@ function addTask() {
         return;
     }
 
-   tasks.push({
-
-text:task,
-
-completed:false,
-
-priority:
-
-document
-
-.getElementById("priority")
-
-.value,
-
-dueDate:
-
-document
-
-.getElementById("dueDate")
-
-.value
-
-});
+    tasks.push({
+        text: task,
+        completed: false,
+        priority: document.getElementById("priority").value,
+        dueDate: document.getElementById("dueDate").value
+    });
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
     input.value = "";
+    document.getElementById("dueDate").value = "";
 
     displayTasks();
 }
 
 function displayTasks() {
+    renderTasks(tasks);
+}
+
+function renderTasks(taskArray) {
 
     let list = document.getElementById("taskList");
 
@@ -52,23 +40,16 @@ function displayTasks() {
     document.getElementById("counter").innerText =
         "Total Tasks : " + tasks.length;
 
-    let completed=
+    let completed = tasks.filter(function(task) {
+        return task.completed;
+    }).length;
 
-tasks.filter(function(task){
+    document.getElementById("completedCounter").innerText =
+        "Completed Tasks : " + completed;
 
-    return task.completed;
+    taskArray.forEach(function(task) {
 
-}).length;
-
-document
-
-.getElementById("completedCounter")
-
-.innerText=
-
-"Completed Tasks : "+completed;
-
-    tasks.forEach(function(task, index) {
+        let originalIndex = tasks.indexOf(task);
 
         let li = document.createElement("li");
 
@@ -78,16 +59,11 @@ document
         let span = document.createElement("span");
 
         span.innerText =
-
-task.text +
-
-" (" +
-
-task.priority +
-
-") - Due: " +
-
-task.dueDate;
+            task.text +
+            " (" +
+            task.priority +
+            ") - Due: " +
+            (task.dueDate || "No Date");
 
         if (task.completed) {
             span.style.textDecoration = "line-through";
@@ -96,9 +72,10 @@ task.dueDate;
 
         span.style.cursor = "pointer";
 
-        span.onclick = function() {
+        span.onclick = function () {
 
-            tasks[index].completed = !tasks[index].completed;
+            tasks[originalIndex].completed =
+                !tasks[originalIndex].completed;
 
             localStorage.setItem(
                 "tasks",
@@ -117,16 +94,17 @@ task.dueDate;
         editBtn.className =
             "btn btn-primary btn-sm me-2";
 
-        editBtn.onclick = function() {
+        editBtn.onclick = function () {
 
             let updated = prompt(
                 "Edit Task",
                 task.text
             );
 
-            if (updated != null && updated.trim() !== "") {
+            if (updated !== null && updated.trim() !== "") {
 
-                tasks[index].text = updated.trim();
+                tasks[originalIndex].text =
+                    updated.trim();
 
                 localStorage.setItem(
                     "tasks",
@@ -144,9 +122,9 @@ task.dueDate;
         deleteBtn.className =
             "btn btn-danger btn-sm";
 
-        deleteBtn.onclick = function() {
+        deleteBtn.onclick = function () {
 
-            tasks.splice(index, 1);
+            tasks.splice(originalIndex, 1);
 
             localStorage.setItem(
                 "tasks",
@@ -178,4 +156,26 @@ function clearTasks() {
 
         displayTasks();
     }
+}
+
+function showAll() {
+    renderTasks(tasks);
+}
+
+function showCompleted() {
+
+    let completedTasks = tasks.filter(function(task) {
+        return task.completed;
+    });
+
+    renderTasks(completedTasks);
+}
+
+function showPending() {
+
+    let pendingTasks = tasks.filter(function(task) {
+        return !task.completed;
+    });
+
+    renderTasks(pendingTasks);
 }
