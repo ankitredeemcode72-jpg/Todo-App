@@ -12,7 +12,7 @@ function addTask() {
         return;
     }
 
-    tasks.push({
+   tasks.push({
 
 text:task,
 
@@ -23,6 +23,14 @@ priority:
 document
 
 .getElementById("priority")
+
+.value,
+
+dueDate:
+
+document
+
+.getElementById("dueDate")
 
 .value
 
@@ -69,19 +77,17 @@ document
 
         let span = document.createElement("span");
 
-        span.innerText=
+        span.innerText =
 
-task.text+
+task.text +
 
-" ("
+" (" +
 
-+
+task.priority +
 
-task.priority
+") - Due: " +
 
-+
-
-")";
+task.dueDate;
 
         if (task.completed) {
             span.style.textDecoration = "line-through";
